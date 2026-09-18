@@ -25,4 +25,18 @@ class BowlingGameTest {
     private void rollMany(int times, int pins) {
         for (int i = 0; i < times; i++) game.roll(pins);
     }
-}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // #A  BowlingGame — roll() · validaciones · estado
+    // ══════════════════════════════════════════════════════════════════════════
+
+    @Test
+    @DisplayName("A1: roll(0) — primer tiro a cero no lanza excepción y registra frame")
+    void rollZeroPins_doesNotThrowAndRegistersFrame() {
+        // Arrange & Act
+        assertDoesNotThrow(() -> game.roll(0));
+        // Assert — debe existir un frame con 0 pinos
+        assertFalse(game.getFrames().isEmpty(), "Debe haber al menos un frame");
+        assertEquals(0, game.getFrames().get(0).getFirstRoll());
+    }
+
