@@ -7,23 +7,18 @@
 
     <groupId>edu.eci.dosw</groupId>
     <artifactId>bowling-tdd</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Bowling TDD – DOSW 2026-2</name>
     <description>Motor de puntuación de Bowling construido con TDD, JUnit 5, JaCoCo y SonarQube</description>
 
     <properties>
-        <java.version>17</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>24</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- Versiones de dependencias -->
-        <junit.version>5.10.3</junit.version>
-        <jacoco.version>0.8.12</jacoco.version>
-        <sonar.version>3.11.0.3922</sonar.version>
+        <junit.version>5.13.4</junit.version>
+        <jacoco.version>0.8.15</jacoco.version>
+        <sonar.version>5.7.0.6970</sonar.version>
 
         <!-- SonarQube – ajustar según el servidor disponible -->
         <sonar.projectKey>bowling-tdd</sonar.projectKey>
@@ -38,26 +33,9 @@
     </properties>
 
     <dependencies>
-        <!-- JUnit Jupiter API (escritura de tests) -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JUnit Jupiter Engine (ejecución) -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JUnit Jupiter Params (tests parametrizados) -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
+            <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
@@ -65,44 +43,25 @@
 
     <build>
         <plugins>
-            <!-- Maven Surefire – ejecuta JUnit 5 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
-                <configuration>
-                    <useModulePath>false</useModulePath>
-                </configuration>
-            </plugin>
 
-            <!-- JaCoCo – cobertura de código -->
+            <!-- JaCoCo: cobertura — falla si line coverage < 85% -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
                 <executions>
-                    <!-- Prepara el agente antes de los tests -->
                     <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
+                        <goals><goal>prepare-agent</goal></goals>
                     </execution>
-                    <!-- Genera el reporte HTML + XML en fase verify -->
                     <execution>
                         <id>report</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
+                        <phase>test</phase>
+                        <goals><goal>report</goal></goals>
                     </execution>
-                    <!-- Umbral mínimo de cobertura: 80% de líneas -->
                     <execution>
                         <id>check</id>
                         <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
+                        <goals><goal>check</goal></goals>
                         <configuration>
                             <rules>
                                 <rule>
@@ -111,7 +70,7 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.80</minimum>
+                                            <minimum>0.85</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -121,12 +80,13 @@
                 </executions>
             </plugin>
 
-            <!-- SonarQube -->
+            <!-- SonarQube: analisis estatico -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${sonar.version}</version>
             </plugin>
+
         </plugins>
     </build>
 </project>

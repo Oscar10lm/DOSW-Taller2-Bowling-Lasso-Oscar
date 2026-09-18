@@ -1,105 +1,92 @@
 package edu.eci.dosw.bowling;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Motor principal del juego de Bowling.
+ * Motor de un juego de Bowling para un jugador.
+ * Un juego tiene exactamente 10 frames.
  *
- * <p>Gestiona los 10 frames de una partida y delega el cálculo de la
- * puntuación a {@link BowlingScorer}. El uso esperado es:</p>
- *
- * <pre>{@code
- * BowlingGame game = new BowlingGame();
- * game.roll(10);          // strike
- * game.roll(3);
- * game.roll(6);
- * int score = game.score(); // 10 + 3 + 6 + 3 + 6 = 28
- * }</pre>
- *
- * <p>El juego acepta exactamente 10 frames. El décimo frame permite tiros
- * adicionales según las reglas de Bowling.</p>
+ * <p>Flujo TDD (RED → GREEN → REFACTOR):
+ * <ol>
+ *   <li>Escribir el test que falla (RED).</li>
+ *   <li>Implementar el mínimo código que lo haga pasar (GREEN).</li>
+ *   <li>Limpiar/mejorar sin romper tests (REFACTOR).</li>
+ * </ol>
+ * </p>
  */
 public class BowlingGame {
 
-    /** Número total de frames en una partida de Bowling. */
+    /** Número total de frames en una partida. */
     private static final int TOTAL_FRAMES = 10;
 
-    /** Índice base cero del décimo frame. */
-    private static final int TENTH_FRAME_INDEX = 9;
+    /** Total de pines en una pista estándar. */
+    private static final int TOTAL_PINS = 10;
 
-    /** Los 10 frames de la partida. */
-    private final Frame[] frames;
+    private final List<Frame> frames;
+    private int currentFrame;
 
-    /** Índice del frame actual (0-based). */
-    private int currentFrameIndex;
-
-    /** Calculador de puntuación. */
-    private final BowlingScorer scorer;
-
-    /**
-     * Construye un nuevo juego de Bowling con los 10 frames inicializados.
-     */
     public BowlingGame() {
-        frames = new Frame[TOTAL_FRAMES];
-        for (int i = 0; i < TOTAL_FRAMES - 1; i++) {
-            frames[i] = new Frame(false);
-        }
-        frames[TENTH_FRAME_INDEX] = new Frame(true);
-        currentFrameIndex = 0;
-        scorer = new BowlingScorer();
+        this.frames = new ArrayList<>();
+        this.currentFrame = 0;
     }
 
     /**
-     * Registra un tiro (lanzamiento de bola).
+     * Registra pinos derribados.
      *
-     * @param pins número de pines derribados (0–10).
-     * @throws IllegalStateException si el juego ya terminó.
+     * @param pins número de pines (0–10).
+     * @throws IllegalArgumentException si {@code pins < 0} o {@code pins > 10}.
+     * @throws IllegalStateException    si el juego ya terminó.
      */
     public void roll(int pins) {
-        if (isGameOver()) {
+        if (pins < 0 || pins > TOTAL_PINS) {
+            throw new IllegalArgumentException(
+                    "Número de pines inválido: " + pins + ". Debe estar entre 0 y 10.");
+        }
+        if (isComplete()) {
             throw new IllegalStateException("El juego ya ha terminado.");
         }
 
-        frames[currentFrameIndex].addRoll(pins);
-
-        // Avanzar al siguiente frame si el actual está completo
-        if (frames[currentFrameIndex].isComplete()
-                && currentFrameIndex < TENTH_FRAME_INDEX) {
-            currentFrameIndex++;
+        // Si no hay frames, o el último está completo y aún caben más frames, crear uno nuevo
+        if (frames.isEmpty()
+                || (frames.get(frames.size() - 1).isComplete() && frames.size() < TOTAL_FRAMES)) {
+            boolean isTenth = (frames.size() == TOTAL_FRAMES - 1);
+            frames.add(new Frame(isTenth));
         }
+
+        frames.get(frames.size() - 1).addRoll(pins);
     }
 
     /**
-     * Calcula y devuelve la puntuación total de la partida.
+     * Calcula y devuelve el puntaje total de la partida.
      *
-     * @return puntuación total incluyendo bonos de strike y spare.
+     * @return puntaje total (0–300).
+     * @throws IllegalStateException si el juego aún no está completo.
      */
     public int score() {
-        return scorer.calculateScore(frames);
+        if (!isComplete()) {
+            throw new IllegalStateException("El juego aún no ha terminado.");
+        }
+        Frame[] frameArray = frames.toArray(new Frame[0]);
+        return new BowlingScorer().calculateScore(frameArray);
     }
 
     /**
-     * Indica si la partida ha concluido (el décimo frame está completo).
+     * Indica si la partida ha concluido (los 10 frames están completos).
      *
-     * @return {@code true} si el juego terminó.
+     * @return {@code true} cuando los 10 frames han sido completados.
      */
-    public boolean isGameOver() {
-        return frames[TENTH_FRAME_INDEX].isComplete();
+    public boolean isComplete() {
+        return frames.size() == TOTAL_FRAMES
+                && frames.get(TOTAL_FRAMES - 1).isComplete();
     }
 
     /**
-     * Devuelve la copia del array de frames para consulta.
+     * Devuelve una copia inmutable de la lista de frames registrados.
      *
-     * @return array de 10 {@link Frame}.
+     * @return lista de {@link Frame}.
      */
-    public Frame[] getFrames() {
-        return frames.clone();
-    }
-
-    /**
-     * Devuelve el índice del frame actual (0-based).
-     *
-     * @return índice del frame en curso.
-     */
-    public int getCurrentFrameIndex() {
-        return currentFrameIndex;
+    public List<Frame> getFrames() {
+        return List.copyOf(frames);
     }
 }
