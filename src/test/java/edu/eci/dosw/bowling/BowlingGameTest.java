@@ -69,4 +69,15 @@ class BowlingGameTest {
         assertEquals(2, game.getFrames().size(), "Debe haber 2 frames");
         assertEquals(1, game.getFrames().get(0).getRollCount(), "Frame 1 tiene 1 tiro (strike)");
     }
+
+    @Test
+    @DisplayName("A7: Frame regular se completa con 2 tiros")
+    void rollTwoTimes_completesFrame() {
+        game.roll(3);
+        game.roll(4);
+        game.roll(1); // Deberia ir al segundo frame
+        assertEquals(2, game.getFrames().size(), "Debe haber 2 frames");
+        assertEquals(2, game.getFrames().get(0).getRollCount(), "Frame 1 tiene 2 tiros");
+        assertEquals(1, game.getFrames().get(1).getRollCount(), "Frame 2 tiene 1 tiro");
+    }
 }
