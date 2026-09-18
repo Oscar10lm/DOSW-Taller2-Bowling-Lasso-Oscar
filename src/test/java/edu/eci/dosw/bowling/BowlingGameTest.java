@@ -80,4 +80,18 @@ class BowlingGameTest {
         assertEquals(2, game.getFrames().get(0).getRollCount(), "Frame 1 tiene 2 tiros");
         assertEquals(1, game.getFrames().get(1).getRollCount(), "Frame 2 tiene 1 tiro");
     }
+
+    @Test
+    @DisplayName("A8: Décimo frame admite hasta 3 tiros si hay strike/spare")
+    void tenthFrame_allowsThreeRollsWithStrikeOrSpare() {
+        rollMany(18, 0); // Llega al décimo frame
+
+        // Caso spare
+        game.roll(5);
+        game.roll(5); // Spare
+        assertFalse(game.isComplete(), "Juego no termina con spare en el 10mo frame");
+        
+        game.roll(1); // 3er tiro
+        assertTrue(game.isComplete(), "Juego termina despues del 3er tiro del 10mo frame");
+    }
 }
