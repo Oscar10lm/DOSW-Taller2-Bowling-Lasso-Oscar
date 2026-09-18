@@ -208,7 +208,7 @@ mvn clean verify sonar:sonar "-Dsonar.token=$env:SONAR_TOKEN"
 
 | # | Pull Request | Módulo | Estado |
 |---|-------------|--------|--------|
-| 1 | [feature/LassoOscar-bowling → develop](https://github.com/Oscar10lm/BowlingGame/pull/1) | Bowling TDD completo (A, B, C + cobertura) | Pendiente merge |
+| 1 | [feature/LassoOscar-bowling → develop](https://github.com/Oscar10lm/BowlingGame/pull/1) | Bowling TDD completo (A, B, C + cobertura) | merge completo |
 
 > Los cambios llegan a `develop` **únicamente mediante Pull Request**, nunca con commits directos.
 
