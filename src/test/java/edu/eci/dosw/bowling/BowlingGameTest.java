@@ -34,4 +34,10 @@ class BowlingGameTest {
         assertFalse(game.getFrames().isEmpty(), "Debe haber al menos un frame");
         assertEquals(0, game.getFrames().get(0).getFirstRoll());
     }
+
+    @Test
+    @DisplayName("A2: roll(-1) — valor negativo lanza IllegalArgumentException")
+    void rollNegativePins_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> game.roll(-1));
+    }
 }
