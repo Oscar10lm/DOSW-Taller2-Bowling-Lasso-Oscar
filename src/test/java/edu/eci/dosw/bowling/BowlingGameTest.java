@@ -46,4 +46,11 @@ class BowlingGameTest {
     void rollMoreThanTenPins_throwsException() {
         assertThrows(IllegalArgumentException.class, () -> game.roll(11));
     }
+
+    @Test
+    @DisplayName("A4: Dos tiros suman > 10 — lanza IllegalArgumentException")
+    void rollTwoRollsSumOverTen_throwsException() {
+        game.roll(7);
+        assertThrows(IllegalArgumentException.class, () -> game.roll(6));
+    }
 }
