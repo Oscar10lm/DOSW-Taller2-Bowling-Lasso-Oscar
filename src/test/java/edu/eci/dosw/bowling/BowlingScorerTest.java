@@ -12,8 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("BowlingScorer – Calculador de puntuación")
 class BowlingScorerTest {
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
     private void rollMany(BowlingGame game, int times, int pins) {
         for (int i = 0; i < times; i++) game.roll(pins);
     }
