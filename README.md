@@ -12,7 +12,7 @@
 | **Código** | 1000100876 |
 | **Correo** | oscar.lasso-m@mail.escuelaing.edu.co |
 | **Materia** | Desarrollo de Software (DOSW) 2026-2 |
-| **Repositorio** | [Oscar10lm/BowlingGame](https://github.com/Oscar10lm/BowlingGame) |
+| **Repositorio** | [DOSW-Taller2-Bowling-Lasso-Oscar](https://github.com/Oscar10lm/DOSW-Taller2-Bowling-Lasso-Oscar) |
 
 ---
 
