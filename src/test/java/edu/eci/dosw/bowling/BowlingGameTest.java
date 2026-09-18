@@ -60,4 +60,13 @@ class BowlingGameTest {
         rollMany(20, 0);
         assertThrows(IllegalStateException.class, () -> game.roll(0));
     }
+
+    @Test
+    @DisplayName("A6: Frame regular se completa con strike (un solo tiro)")
+    void rollStrike_completesFrame() {
+        game.roll(10);
+        game.roll(5);
+        assertEquals(2, game.getFrames().size(), "Debe haber 2 frames");
+        assertEquals(1, game.getFrames().get(0).getRollCount(), "Frame 1 tiene 1 tiro (strike)");
+    }
 }
