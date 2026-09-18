@@ -14,7 +14,7 @@
     <description>Motor de puntuación de Bowling construido con TDD, JUnit 5, JaCoCo y SonarQube</description>
 
     <properties>
-        <maven.compiler.release>24</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.13.4</junit.version>
         <jacoco.version>0.8.15</jacoco.version>
@@ -22,7 +22,8 @@
 
         <!-- SonarQube – ajustar según el servidor disponible -->
         <sonar.projectKey>bowling-tdd</sonar.projectKey>
-        <sonar.projectName>Bowling TDD – DOSW 2026-2</sonar.projectName>
+        <sonar.projectName>Bowling TDD Taller 02</sonar.projectName>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
         <sonar.language>java</sonar.language>
         <sonar.sources>src/main</sonar.sources>
         <sonar.tests>src/test</sonar.tests>

@@ -94,4 +94,55 @@ class BowlingGameTest {
         game.roll(1); // 3er tiro
         assertTrue(game.isComplete(), "Juego termina despues del 3er tiro del 10mo frame");
     }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // #C  BowlingGame — isComplete() · estado del juego
+    // ══════════════════════════════════════════════════════════════════════════
+
+    @Test
+    @DisplayName("C1: isComplete() al inicio del juego retorna false")
+    void isComplete_atStart_returnsFalse() {
+        assertFalse(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C2: isComplete() después de 9 frames → false")
+    void isComplete_afterNineFrames_returnsFalse() {
+        rollMany(18, 0);
+        assertFalse(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C3: isComplete() después de 10 frames normales → true")
+    void isComplete_afterTenNormalFrames_returnsTrue() {
+        rollMany(20, 0);
+        assertTrue(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C4: Spare en frame 10 + bono → isComplete() true")
+    void isComplete_spareInTenthPlusBonus_returnsTrue() {
+        rollMany(18, 0);
+        game.roll(5);
+        game.roll(5); // spare
+        game.roll(3); // bono
+        assertTrue(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C5: Strike en frame 10 + 2 bonos → isComplete() true")
+    void isComplete_strikeInTenthPlusTwoBonuses_returnsTrue() {
+        rollMany(18, 0);
+        game.roll(10); // strike
+        game.roll(3);
+        game.roll(2);
+        assertTrue(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C6: Juego perfecto (12 strikes) → isComplete() true")
+    void isComplete_perfectGame_returnsTrue() {
+        for (int i = 0; i < 12; i++) game.roll(10);
+        assertTrue(game.isComplete());
+    }
 }

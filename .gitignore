@@ -39,3 +39,7 @@ target/
 
 # VS Code
 .vscode/
+
+# SonarQube
+.sonarqube/
+.scannerwork/
