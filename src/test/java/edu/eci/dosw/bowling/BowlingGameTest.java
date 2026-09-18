@@ -40,4 +40,10 @@ class BowlingGameTest {
     void rollNegativePins_throwsException() {
         assertThrows(IllegalArgumentException.class, () -> game.roll(-1));
     }
+
+    @Test
+    @DisplayName("A3: roll(11) — valor mayor a 10 lanza IllegalArgumentException")
+    void rollMoreThanTenPins_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> game.roll(11));
+    }
 }
