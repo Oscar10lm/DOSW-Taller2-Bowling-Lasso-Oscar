@@ -11,7 +11,7 @@
 | **Nombre** | Oscar David Lasso Martínez |
 | **Código** | 1000100876 |
 | **Correo** | oscar.lasso-m@mail.escuelaing.edu.co |
-| **Materia** | Desarrollo de Software (DOSW) 2026-2 |
+| **Materia** | Desarrollo y Operaciones Software (DOSW) 2026-2 |
 | **Repositorio** | [DOSW-Taller2-Bowling-Lasso-Oscar](https://github.com/Oscar10lm/DOSW-Taller2-Bowling-Lasso-Oscar) |
 
 ---
