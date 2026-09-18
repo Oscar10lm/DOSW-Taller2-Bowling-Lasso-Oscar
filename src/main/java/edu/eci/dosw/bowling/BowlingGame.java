@@ -23,6 +23,9 @@ public class BowlingGame {
         if (pins < 0 || pins > 10) {
             throw new IllegalArgumentException("Pines fuera de rango: " + pins);
         }
+        if (isComplete()) {
+            throw new IllegalStateException("El juego ya ha terminado.");
+        }
         if (!frames.isEmpty()) {
             Frame lastFrame = frames.get(frames.size() - 1);
             if (!lastFrame.isComplete() && !lastFrame.isTenth()) {
@@ -44,7 +47,7 @@ public class BowlingGame {
 
     /** true cuando los 10 frames han sido completados. */
     public boolean isComplete() {
-        return false;
+        return frames.size() == 10 && frames.get(9).isComplete();
     }
 
     public List<Frame> getFrames() { return List.copyOf(frames); }
