@@ -23,6 +23,14 @@ public class BowlingGame {
         if (pins < 0 || pins > 10) {
             throw new IllegalArgumentException("Pines fuera de rango: " + pins);
         }
+        if (!frames.isEmpty()) {
+            Frame lastFrame = frames.get(frames.size() - 1);
+            if (!lastFrame.isComplete() && !lastFrame.isTenth()) {
+                if (lastFrame.getFirstRoll() + pins > 10) {
+                    throw new IllegalArgumentException("La suma excede 10");
+                }
+            }
+        }
         if (frames.isEmpty() || frames.get(frames.size() - 1).isComplete()) {
             frames.add(new Frame(frames.size() == 9));
         }
